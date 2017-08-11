@@ -7,10 +7,6 @@ import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
-/**
- * Created by Yuvaraj on 23/05/2017.
- */
-//@Guice(modules = GuiceModule.class)
 @Guice(moduleFactory = ModuleFactory.class)
 public class TestClass {
 
@@ -24,5 +20,7 @@ public class TestClass {
     public void testmethod() {
         driver.get("http://google.com");
         sampleDepe.displayMethod();
+        sampleDepe.displayMethod2();
+        sampleDepe.displayMethod3();
     }
 }

@@ -6,8 +6,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Created by Yuvaraj on 24/05/2017.
+ * Created by Yuvaraj on 11/08/2017.
  */
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Page {
+public @interface Report {
+    String value();
 }
