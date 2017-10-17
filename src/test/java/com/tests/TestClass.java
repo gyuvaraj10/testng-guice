@@ -1,26 +1,29 @@
 package com.tests;
 
 import com.google.inject.Inject;
-import com.laranerds.tests.pages.SampleDepe;
-import com.laranerds.tests.configuration.ModuleFactory;
+import com.google.inject.Provider;
+import com.laranerds.tests.listners.HookableListner;
+import com.laranerds.tests.listners.InvokedMethodListener;
 import org.openqa.selenium.WebDriver;
+import org.testng.annotations.*;
+import com.laranerds.tests.configuration.ModuleFactory;
 import org.testng.annotations.Guice;
-import org.testng.annotations.Test;
 
 @Guice(moduleFactory = ModuleFactory.class)
+@Listeners(value = {HookableListner.class, InvokedMethodListener.class})
 public class TestClass {
 
     @Inject
-    SampleDepe sampleDepe;
+    Provider<WebDriver> driver;
 
-    @Inject
-    WebDriver driver;
+    @BeforeMethod
+    public void beforeTest() {
+        driver.get().get("http://google.com");
+    }
 
-    @Test
-    public void testmethod() {
-        driver.get("http://google.com");
-        sampleDepe.displayMethod();
-        sampleDepe.displayMethod2();
-        sampleDepe.displayMethod3();
+    @AfterMethod
+    public void afterTest() {
+        driver.get().close();
+        driver.get().quit();
     }
 }
