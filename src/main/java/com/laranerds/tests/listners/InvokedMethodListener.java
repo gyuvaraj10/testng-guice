@@ -6,7 +6,6 @@ import org.testng.IInvokedMethodListener;
 import org.testng.ITestNGMethod;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
-import org.testng.internal.InvokedMethod;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -18,15 +17,10 @@ import java.util.List;
  */
 public class InvokedMethodListener implements IInvokedMethodListener {
 
-    private boolean scopeEntered;
     private boolean scopeExit;
 
     @Override
     public void beforeInvocation(IInvokedMethod iInvokedMethod, ITestResult iTestResult) {
-        if(!scopeEntered && !iInvokedMethod.getTestMethod().getMethodName().equalsIgnoreCase("afterTest")) {
-            ModuleFactory.getTestMethodModule().testMethodScope.enter();
-            scopeEntered = true;
-        }
     }
 
     @Override
@@ -44,14 +38,14 @@ public class InvokedMethodListener implements IInvokedMethodListener {
                 String methodName = testNGMethod.getMethodName();
                 try {
                     if(testNGMethod.getRealClass().getDeclaredMethod(methodName).getDeclaredAnnotation(AfterMethod.class) != null) {
-                        ModuleFactory.getTestMethodModule().testMethodScope.exit();
+                        ModuleFactory.getTestMethodModule().testMethodScope.exitScope();
                         scopeExit = true;
                     }
                 } catch (NoSuchMethodException e) {
                     e.printStackTrace();
                 }
             } else {
-                ModuleFactory.getTestMethodModule().testMethodScope.exit();
+                ModuleFactory.getTestMethodModule().testMethodScope.exitScope();
                 scopeExit = true;
             }
         }

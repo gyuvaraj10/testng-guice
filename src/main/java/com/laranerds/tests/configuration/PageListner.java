@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
 
 /**
  * Created by Yuvaraj on 24/05/2017.
@@ -18,9 +19,13 @@ public class PageListner implements TypeListener {
     @Override
     public <I> void hear(TypeLiteral<I> typeLiteral, TypeEncounter<I> typeEncounter) {
         Annotation[] annotations = typeLiteral.getRawType().getDeclaredAnnotations();
-        if(typeLiteral.getRawType().getFields().length > 0 ) {
-            if (typeLiteral.getRawType().getFields()[0].getType().isAssignableFrom(WebElement.class)) {
-                typeEncounter.register(new PageFactoryInjectionListner(typeEncounter.getProvider(WebDriver.class)));
+        Field[] fields = typeLiteral.getRawType().getDeclaredFields();
+        if(fields.length > 0 ) {
+            for(Field field: fields) {
+                if (field.getType().isAssignableFrom(WebElement.class)) {
+                    typeEncounter.register(new PageFactoryInjectionListner(typeEncounter.getProvider(WebDriver.class)));
+                    break;
+                }
             }
         }
     }

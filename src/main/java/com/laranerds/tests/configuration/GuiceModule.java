@@ -1,10 +1,8 @@
 package com.laranerds.tests.configuration;
 
 import com.google.inject.*;
-import com.google.inject.matcher.Matcher;
 import com.google.inject.matcher.Matchers;
 import com.google.inject.name.Names;
-import com.laranerds.tests.annotations.Page;
 import com.laranerds.tests.annotations.Report;
 import com.laranerds.tests.pages.SampleDepe;
 import com.laranerds.tests.scopes.TestMethodScoped;

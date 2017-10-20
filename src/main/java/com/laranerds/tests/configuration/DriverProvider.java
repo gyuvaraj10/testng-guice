@@ -11,6 +11,7 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -28,32 +29,40 @@ public class DriverProvider implements Provider<WebDriver> {
     private String gridUrl;
 
     public WebDriver get() {
+        WebDriver driver = null;
         switch (browser.toLowerCase()) {
             case "chrome":  {
                 System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
                 DesiredCapabilities capability = DesiredCapabilities.chrome();
-                return new ChromeDriver(capability);
+                driver = new EventFiringWebDriver(new ChromeDriver(capability));
+                break;
             }
             case "firefox": {
-                return new FirefoxDriver();
+                driver = new FirefoxDriver();
+                break;
             }
             case "grid": {
                 try {
-                    return new RemoteWebDriver(new URL(gridUrl), new DesiredCapabilities());
+                    driver = new RemoteWebDriver(new URL(gridUrl),
+                            new DesiredCapabilities());
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 }
+                break;
             }
             case "safari": {
-                return new SafariDriver();
+                driver = new SafariDriver();
+                break;
             }
             case "ie": {
-                return new InternetExplorerDriver();
+                driver =new InternetExplorerDriver();
+                break;
             }
             default: {
-                return new ChromeDriver();
+                driver = new ChromeDriver();
+                break;
             }
         }
-
+        return driver;
     }
 }

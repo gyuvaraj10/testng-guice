@@ -1,36 +1,41 @@
 package com.laranerds.tests.scopes;
 
-import com.google.common.collect.Maps;
 import com.google.inject.*;
+import com.laranerds.tests.configuration.ModuleFactory;
+import org.openqa.selenium.WebDriver;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class TestMethodScope implements Scope {
 
-    private Map<Key<?>, Object> values = new HashMap<>();
+    private ThreadLocal<Map<Key<?>, Object>> threadLocal = new ThreadLocal<>();
 
-    public void enter() {
-//        values = new HashMap<>();
+    public TestMethodScope() {
+        threadLocal.set(new HashMap<Key<?>, Object>());
+    }
+    @Inject
+    Provider<WebDriver> provider;
+
+    public void enterScope() {
+        threadLocal.set(new HashMap<Key<?>, Object>());
     }
 
-    public void exit() {
-        values.clear();
+    public void exitScope() {
+        threadLocal.remove();
+        enterScope();
     }
 
     public <T> Provider<T> scope(final Key<T> key, final Provider<T> unscoped) {
         return new Provider<T>() {
             public T get() {
-                T current = (T) values.get(key);
-                if (current == null && !values.containsKey(key)) {
+                T current = (T) threadLocal.get().get(key);
+                if (current == null && !threadLocal.get().containsKey(key)) {
                     current = unscoped.get();
-
-                    // don't remember proxies; these exist only to serve circular dependencies
                     if (Scopes.isCircularProxy(current)) {
                         return current;
                     }
-
-                    values.put(key, current);
+                    threadLocal.get().put(key, current);
                 }
                 return current;
             }

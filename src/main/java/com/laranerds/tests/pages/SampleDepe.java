@@ -11,24 +11,28 @@ import org.openqa.selenium.support.FindBy;
 @Page
 public class SampleDepe {
 
-    @FindBy(name = "Continue")
+    @FindBy(id = "lst-ib")
     private WebElement searchTextBox;
 
+    WebDriver driver;
+
     @Inject
-    Provider<WebDriver> driver;
+    public SampleDepe(Provider<WebDriver> driver) {
+        this.driver = driver.get();
+    }
 
     @Report("display Method is Called")
     public void displayMethod() {
-        driver.get().get("http://amazon.com");
+        searchTextBox.sendKeys("test123");
     }
 
     @Report("display Method2 is Called")
     public void displayMethod2() throws Exception{
-        driver.get().get("http://youtube.com");
+        driver.get("http://youtube.com");
     }
 
 
     public void displayMethod3() {
-        driver.get().get("http://google.com");
+        driver.get("http://google.com");
     }
 }

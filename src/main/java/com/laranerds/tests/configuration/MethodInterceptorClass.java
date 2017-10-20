@@ -26,9 +26,8 @@ public class MethodInterceptorClass implements MethodInterceptor {
                 value = report.value();
                 try {
                     methodInvocation.proceed();
-                    System.out.println("Success " +value);
                 } catch (Exception ex) {
-                    System.out.println("Failed " + value + "due to" +ex.getMessage());
+                    throw ex;
                 }
             }
             return value;

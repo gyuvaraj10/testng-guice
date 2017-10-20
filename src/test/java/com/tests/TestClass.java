@@ -23,7 +23,8 @@ public class TestClass {
 
     @AfterMethod
     public void afterTest() {
-        driver.get().close();
-        driver.get().quit();
+        WebDriver driver1 =driver.get();
+        driver1.close();
+        driver1.quit();
     }
 }
