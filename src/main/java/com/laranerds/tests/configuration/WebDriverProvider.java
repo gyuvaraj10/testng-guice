@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
@@ -17,7 +18,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 @Singleton
-public class DriverProvider implements Provider<WebDriver> {
+public class WebDriverProvider implements Provider<WebDriver> {
 
 
     @Inject
@@ -32,7 +33,7 @@ public class DriverProvider implements Provider<WebDriver> {
         WebDriver driver = null;
         switch (browser.toLowerCase()) {
             case "chrome":  {
-                System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
+//                System.setProperty("webdriver.chrome.driver", "/usr/local/bin/chromedriver");
                 DesiredCapabilities capability = DesiredCapabilities.chrome();
                 driver = new EventFiringWebDriver(new ChromeDriver(capability));
                 break;

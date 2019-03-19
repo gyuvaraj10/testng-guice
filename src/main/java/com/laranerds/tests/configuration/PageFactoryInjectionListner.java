@@ -3,6 +3,8 @@ package com.laranerds.tests.configuration;
 
 import com.google.inject.Provider;
 import com.google.inject.spi.InjectionListener;
+import com.laranerds.tests.annotations.Mobile;
+import com.laranerds.tests.annotations.Web;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;

@@ -32,17 +32,21 @@
             <version>2.53.0</version>
             <!--<version>3.1.0</version>-->
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.seleniumhq.selenium</groupId>-->
-            <!--<artifactId>selenium-server</artifactId>-->
-            <!--&lt;!&ndash;<version>2.53.0</version>&ndash;&gt;-->
-            <!--<version>3.1.0</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>io.appium</groupId>
+            <artifactId>java-client</artifactId>
+            <version>7.0.0</version>
+        </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-support</artifactId>
             <version>2.53.0</version>
             <!--<version>3.1.0</version>-->
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-api</artifactId>
+            <version>2.53.1</version>
         </dependency>
         <!--<dependency>-->
             <!--<groupId>org.seleniumhq.selenium</groupId>-->
